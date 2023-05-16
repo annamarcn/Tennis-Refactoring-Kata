@@ -18,46 +18,27 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
-        if (scorePlayer1 == scorePlayer2)
-        {
-            score = getTieScore(scorePlayer1);
+        if (scorePlayer1 == scorePlayer2) {
+            return getTieScore(scorePlayer1);
         }
-        else if (scorePlayer1 >=4 || scorePlayer2 >=4)
-        {
-            int diff = scorePlayer1 - scorePlayer2;
-            score = getAdvantageOrWinScore(diff);
+        else if (scorePlayer1 >=4 || scorePlayer2 >=4) {
+            return getAdvantageOrWinScore(scorePlayer1 - scorePlayer2);
         }
-        else
-        {
-            score = getCurrentScore(score);
-        }
-        return score;
+        return getCurrentScore();
     }
 
-    private String getCurrentScore(String score) {
-        int tempScore;
-        for (int i = 1; i<3; i++)
-        {
-            if (i==1) tempScore = scorePlayer1;
-            else { score +="-"; tempScore = scorePlayer2;}
-            switch(tempScore)
-            {
-                case 0:
-                    score +="Love";
-                    break;
-                case 1:
-                    score +="Fifteen";
-                    break;
-                case 2:
-                    score +="Thirty";
-                    break;
-                case 3:
-                    score +="Forty";
-                    break;
-            }
-        }
-        return score;
+    private String getCurrentScore() {
+        return scoreTranslation(scorePlayer1) + "-" + scoreTranslation(scorePlayer2);
+    }
+
+    private static String scoreTranslation(int score) {
+        return switch (score) {
+            case 0 -> "Love";
+            case 1 -> "Fifteen";
+            case 2 -> "Thirty";
+            case 3 -> "Forty";
+            default -> throw new IllegalStateException("Unexpected value: " + score);
+        };
     }
 
     private String getAdvantageOrWinScore(int diff) {
