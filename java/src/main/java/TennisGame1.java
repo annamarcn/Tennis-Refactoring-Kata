@@ -24,14 +24,10 @@ public class TennisGame1 implements TennisGame {
         else if (scorePlayer1 >=4 || scorePlayer2 >=4) {
             return getAdvantageOrWinScore(scorePlayer1 - scorePlayer2);
         }
-        return getCurrentScore();
+        return translate(scorePlayer1) + "-" + translate(scorePlayer2);
     }
 
-    private String getCurrentScore() {
-        return scoreTranslation(scorePlayer1) + "-" + scoreTranslation(scorePlayer2);
-    }
-
-    private static String scoreTranslation(int score) {
+    private static String translate(int score) {
         return switch (score) {
             case 0 -> "Love";
             case 1 -> "Fifteen";
@@ -42,10 +38,10 @@ public class TennisGame1 implements TennisGame {
     }
 
     private String getAdvantageOrWinScore(int diff) {
-        if (diff==1) return "Advantage player1";
-        else if (diff ==-1) return "Advantage player2";
-        else if (diff>=2) return "Win for player1";
-        else return "Win for player2";
+        if (diff==1) return "Advantage " + player1Name;
+        else if (diff ==-1) return "Advantage " + player2Name;
+        else if (diff>=2) return "Win for " + player1Name;
+        else return "Win for " + player2Name;
     }
 
     private String getTieScore(int score) {
